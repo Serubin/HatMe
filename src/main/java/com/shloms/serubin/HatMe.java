@@ -21,7 +21,7 @@ public class HatMe extends JavaPlugin{
 	public static HatMe plugin;
 	public static Logger log = Logger.getLogger("Minecraft");
 	FileConfiguration config;
-	public static double version = "0.4 - DEBUG";
+	public static double version = 0.4;
 	public static String name = "HatMe";
 	
 	  public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
@@ -71,7 +71,12 @@ public class HatMe extends JavaPlugin{
                     player.sendMessage(itemHead.toString());
                     player.sendMessage(ChatColor.RED + Integer.toString(empty));
                     player.sendMessage(ChatColor.YELLOW + "Helmet gotten, first empty spot goteen!");
+                    try{
                     inventory.setHelmet(none);                     // removes item from helmet
+                    }catch (NullPointerException n){
+                    	log.severe("[HatMe]: Unhat error NullPointerException!");
+                    	log.severe("[HatMe]: NullPointerException Handled");
+                    }
                     player.sendMessage(none.toString());
                     inventory.setItem(empty, itemHead);              //Sets item from helmet to first open slot
                     player.sendMessage(itemHead.toString());
