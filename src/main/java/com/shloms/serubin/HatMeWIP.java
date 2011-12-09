@@ -24,6 +24,7 @@ public class HatMe extends JavaPlugin{
 	public static HatMe plugin;
 	public static Logger log = Logger.getLogger("Minecraft");
 	Configuration config;
+	ConfigurationSection configsec;
 	public static String version = 0.4 + "RC1";
 	public static String name = "HatMe";
 	boolean rbAllow;
@@ -91,7 +92,7 @@ public class HatMe extends JavaPlugin{
 			log.info("[" + name + "]: " + "Restricted Blocks enabled!");
 			
 		}
-		List<Integer> rbBlocks = config.getIntegerList("restrictblocks.allowed", 1,2,3,4,5,12,13,14,15,17,18,20,22,23,24,25,35,41,42,44,45,46,47,48,49,52,54,57,58,80,81,82,87,88,89,91,98,103,112);
+		List<Integer> rbBlocks = configsec.getIntegerList("restrictblocks.allowed", 1,2,3,4,5,12,13,14,15,17,18,20,22,23,24,25,35,41,42,44,45,46,47,48,49,52,54,57,58,80,81,82,87,88,89,91,98,103,112);
 		
 		config.load();
 		//this.logger.info(pdfFile.getName() + " Version " + pdfFile.getVersion() + " is enabled ");
