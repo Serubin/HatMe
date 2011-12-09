@@ -1,8 +1,12 @@
 name: hatMe
 main: com.shloms.serubin.HatMe
-version: 0.4 - DEBUG
+version: 0.4
 commands:
    hat:
       description: Puts the item you are holding on your head.
       permission: hatme.basic
       usage: /hat
+   unhat:
+      description: Puts the item on your head into your inventory.
+      permission: hatme.basic
+      usage: /unhat
