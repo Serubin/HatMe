@@ -21,7 +21,7 @@ public class HatMe extends JavaPlugin{
 	public static HatMe plugin;
 	public static Logger log = Logger.getLogger("Minecraft");
 	FileConfiguration config;
-	public static String version = 0.4;
+	public static String version = "0.4.1";
 	public static String name = "HatMe";
 	
 	  public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
@@ -49,7 +49,7 @@ public class HatMe extends JavaPlugin{
 						}
 					  } 
 						}
-			 return false;
+			 return true;
 					  }
 					 
 					  
@@ -62,7 +62,6 @@ public class HatMe extends JavaPlugin{
 					//ItemStack itemHand = player.getItemInHand();
                     PlayerInventory inventory = player.getInventory();
                     int empty = inventory.firstEmpty();
-                    ItemStack none = inventory.getItem(empty);
                     ItemStack itemHead = inventory.getHelmet();                        //Get item in helmet
                     inventory.setHelmet(null);                     // removes item from helmet
                     inventory.setItem(empty, itemHead);              //Sets item from helmet to first open slot
@@ -70,7 +69,7 @@ public class HatMe extends JavaPlugin{
 				  	}  
 		  	}
 		  }
-		return false;
+		return true;
 	  }
 	 
 	  

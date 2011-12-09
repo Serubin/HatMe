@@ -1,6 +1,6 @@
 name: hatMe
 main: com.shloms.serubin.HatMe
-version: 0.4
+version: 0.4.1
 commands:
    hat:
       description: Puts the item you are holding on your head.
