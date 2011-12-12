@@ -3,6 +3,7 @@ package com.shloms.serubin.hatme;
 //import java.io.File;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 import org.bukkit.ChatColor;
@@ -21,8 +22,6 @@ public class HatMe extends JavaPlugin{
 
 	public static HatMe plugin;
 	public static Logger log = Logger.getLogger("Minecraft");
-	FileConfiguration config = getConfig();
-	
 	public static String version = "0.4.1";
 	public static String name = "HatMe";
 	
@@ -36,9 +35,15 @@ public class HatMe extends JavaPlugin{
 	public void onEnable(){
 		log.info(name + "version" + version + "has been enabled");
 		PluginManager pm = getServer().getPluginManager();
-		getConfig().options().copyDefaults(true);
+		getConfig().options().copyDefaults();
+		saveConfig();
 		
-
+		int[] setAllow = {1, 2, 3, 4, 5, 12, 13, 14, 15, 17, 18, 20, 22, 23, 24, 25, 35, 41, 42, 44, 45, 46, 47, 48, 49, 52, 54, 57, 58, 80, 81, 82, 87, 88, 89, 91, 98, 103, 112};
+		this.getConfig().set("allowed", setAllow);
+		this.getConfig().set("enable", true);
+		this.getConfig().set("opnorestrict", true);
+		saveConfig();
+		
 		//this.logger.info(pdfFile.getName() + " Version " + pdfFile.getVersion() + " is enabled ");
 		}
 	
@@ -114,6 +119,8 @@ public class HatMe extends JavaPlugin{
              if (itemHead.getTypeId() != 0) {
                  inventory.setItemInHand(itemHead);
              player.sendMessage(ChatColor.YELLOW + "You now have a hat!");
+             }else{
+             player.sendMessage(ChatColor.YELLOW + "You now have a hat!"); 
              return true;
              }
 	  	}
