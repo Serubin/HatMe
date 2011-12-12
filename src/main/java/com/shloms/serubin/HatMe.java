@@ -1,6 +1,5 @@
 package com.shloms.serubin.hatme;
 
-import java.lang.reflect.Array;
 import java.util.List;
 import java.util.logging.Logger;
 import org.bukkit.ChatColor;
@@ -9,54 +8,55 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-//import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.configuration.*;
+import org.bukkit.configuration.file.FileConfiguration;
 
 public class HatMe extends JavaPlugin{
 
 	public static HatMe plugin;
 	public static Logger log = Logger.getLogger("Minecraft");
-	public static String version = "0.4.1";
-	public static String name = "HatMe";
+	private String name;
+	private String version;
+	public static boolean rbAllow;
+	public static List<Integer> rbBlocks;
 	
 	@Override
 	public void onDisable() {
 		//PluginDescriptionFile pdfFile =this.getDescription();
 		//this.logger.info(pdfFile.getName() + " is now disabled ");
+		saveConfig();
 		log.info(name + "has been disabled");
 	}
 	@Override
 	public void onEnable(){
-		log.info(name + "version" + version + "has been enabled");
+		
+		version = this.getDescription().getName();
+		name = this.getDescription().getVersion();
+		
+		log.info(name + " version " + version + " has started...");
 		PluginManager pm = getServer().getPluginManager();
-		getConfig().options().copyDefaults();
+		getConfig().options().copyDefaults(true);
 		saveConfig();
+		log.info(name + " version " + version + " has been enabled!");
 		
-		String[] setAllow = {"1", "2", "3", "4", "5", "12", "13", "14", "15", "17", "18", "20", "22", "23", "24", "25", "35", "41", "42", "44", "45", "46", "47", "48", "49", "52", "54", "57", "58", "80", "81", "82", "87", "88", "89", "91", "98", "103", "112"};
-		this.getConfig().set("allowed", Array.asList(setAllow));
-		this.getConfig().set("enable", true);
-		this.getConfig().set("opnorestrict", true);
-		saveConfig();
-		
-		//this.logger.info(pdfFile.getName() + " Version " + pdfFile.getVersion() + " is enabled ");
 		}
 	
 	
 	
 	
-	  public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+	  @SuppressWarnings("unchecked")
+	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		  Player player = (Player) sender;
 		  ItemStack itemHand = player.getItemInHand();
 		  int itemHandId = itemHand.getTypeId();
-		  List<Integer> rbBlocks = getConfig().getList("allowed");
-		  boolean rbAllow = getConfig().getBoolean("enabled");
+		  rbBlocks = getConfig().getList("allowed");
+		  rbAllow = getConfig().getBoolean("enabled");
 		  
 ;		 if (commandLabel.equalsIgnoreCase("hat") || commandLabel.equalsIgnoreCase("hatme") || commandLabel.equalsIgnoreCase("hm")){
 				if (checkPermissionBasic(player)) {
 					if(rbAllow = true){
-						for(int allowID: rbBlocks){
+						for(Integer allowID: rbBlocks){
 						if(itemHandId != allowID){
 							player.sendMessage(ChatColor.RED + "Invalid item");
 							return true;
