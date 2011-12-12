@@ -1,22 +1,18 @@
 package com.shloms.serubin.hatme;
 
-//import java.io.File;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.lang.reflect.Array;
 import java.util.List;
 import java.util.logging.Logger;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.material.*;
 //import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.configuration.*;
 
 public class HatMe extends JavaPlugin{
 
@@ -38,8 +34,8 @@ public class HatMe extends JavaPlugin{
 		getConfig().options().copyDefaults();
 		saveConfig();
 		
-		int[] setAllow = {1, 2, 3, 4, 5, 12, 13, 14, 15, 17, 18, 20, 22, 23, 24, 25, 35, 41, 42, 44, 45, 46, 47, 48, 49, 52, 54, 57, 58, 80, 81, 82, 87, 88, 89, 91, 98, 103, 112};
-		this.getConfig().set("allowed", setAllow);
+		String[] setAllow = {"1", "2", "3", "4", "5", "12", "13", "14", "15", "17", "18", "20", "22", "23", "24", "25", "35", "41", "42", "44", "45", "46", "47", "48", "49", "52", "54", "57", "58", "80", "81", "82", "87", "88", "89", "91", "98", "103", "112"};
+		this.getConfig().set("allowed", Array.asList(setAllow));
 		this.getConfig().set("enable", true);
 		this.getConfig().set("opnorestrict", true);
 		saveConfig();
