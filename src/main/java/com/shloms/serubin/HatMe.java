@@ -20,53 +20,59 @@ public class HatMe extends JavaPlugin{
 	private String version;
 	public static boolean rbAllow;
 	public static List<Integer> rbBlocks;
-	
+	public static List<Integer> allowID;
+
 	@Override
 	public void onDisable() {
-		//PluginDescriptionFile pdfFile =this.getDescription();
-		//this.logger.info(pdfFile.getName() + " is now disabled ");
 		saveConfig();
 		log.info(name + "has been disabled");
 	}
 	@Override
 	public void onEnable(){
-		
+
 		version = this.getDescription().getName();
 		name = this.getDescription().getVersion();
-		
+
 		log.info(name + " version " + version + " has started...");
 		PluginManager pm = getServer().getPluginManager();
 		getConfig().options().copyDefaults(true);
 		saveConfig();
 		log.info(name + " version " + version + " has been enabled!");
-		
+
 		}
-	
-	
-	
-	
-	  @SuppressWarnings("unchecked")
-	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+
+
+
+
+	  public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		  Player player = (Player) sender;
 		  ItemStack itemHand = player.getItemInHand();
 		  int itemHandId = itemHand.getTypeId();
-		  rbBlocks = getConfig().getList("allowed");
-		  rbAllow = getConfig().getBoolean("enabled");
+		  //rbBlocks = getConfig().getList("hatMe.allowed");
 		  
+		  
+		  
+
 ;		 if (commandLabel.equalsIgnoreCase("hat") || commandLabel.equalsIgnoreCase("hatme") || commandLabel.equalsIgnoreCase("hm")){
 				if (checkPermissionBasic(player)) {
-					if(rbAllow = true){
-						for(Integer allowID: rbBlocks){
-						if(itemHandId != allowID){
-							player.sendMessage(ChatColor.RED + "Invalid item");
+					//List<Integer> allowID = rbBlocks;
+						//AllowID.addAll(rbAllow);
+					rbAllow = getConfig().getBoolean("hatMe.enabled");
+					if(rbAllow != true){
+						//for(Integer allowID: rbBlocks){
+						//if(itemHandId != allowID){
+							player.sendMessage(ChatColor.RED + "Invalid item" + Boolean.toString(rbAllow));
 							return true;
-						}else{hatOn(sender); return true;}
-					}
-					}else{hatOn(sender); return true;}
+						//}else{hatOn(sender); return true;}
+					//}
+					}else{hatOn(sender); player.sendMessage(Boolean.toString(rbAllow));  return true;}
+				}else{
+					player.sendMessage(ChatColor.RED + "You do not have permission");
+					return true;
 				}
 			  }
-				
-					  
+
+
 		  if (commandLabel.equalsIgnoreCase("unhat") || commandLabel.equalsIgnoreCase("unhatme") || commandLabel.equalsIgnoreCase("unhm")){
 			  if(checkPermissionBasic(player)){
 				  if (player.getInventory().getHelmet().getTypeId() == 0) {                          //If helmet is empty do nothing
@@ -89,8 +95,8 @@ public class HatMe extends JavaPlugin{
 		  }
 		return true;
 	  }
-	 
-	  
+
+
 	 private boolean checkPermissionBasic(Player player) {
 	     if(player.hasPermission("hatme.basic") || player.hasPermission("hatme.*") || player.isOp()) return true;
 	     return false;
@@ -99,8 +105,8 @@ public class HatMe extends JavaPlugin{
 	  //   if(player.hasPermission("hatme.give") || player.hasPermission("hatme.*") || player.isOp()) return true;
 	    // return false;
 	// }
-	    
-	 
+
+
 	public boolean hatOn(CommandSender sender){
 		Player player = (Player) sender;
 	 if (player.getItemInHand().getTypeId() == 0) {
@@ -122,6 +128,5 @@ public class HatMe extends JavaPlugin{
 	  	}
 	 return false;
 	}
-	
-}
 
+}
