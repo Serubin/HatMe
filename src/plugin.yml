@@ -1,0 +1,15 @@
+name: hatMe
+main: com.shloms.serubin.hatme.HatMe
+version: 0.5.1
+
+commands:
+   hat:
+      aliases: [hat, hatme, hm]
+      description: Command that puts the item you are holding on your head.
+      permission: hatme.basic
+      usage: /<command> - puts item on head
+   unhat:
+      aliases: [unhat, unhatme, unhm]
+      description: Command to take your "hat" off.
+      permission: hatme.basic
+      usage: /<command> - takes item off head
