@@ -42,3 +42,4 @@ hatMe:
     - 103
     - 112
     opnorestrict: true
+    notAllowedMsg: Invalid Item

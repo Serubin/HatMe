@@ -1,6 +1,6 @@
 name: hatMe
 main: com.shloms.serubin.hatme.HatMe
-version: 0.5
+version: 0.5.1
 
 commands:
    hat:

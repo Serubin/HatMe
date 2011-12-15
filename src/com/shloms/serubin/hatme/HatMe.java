@@ -20,6 +20,7 @@ public class HatMe extends JavaPlugin{
 	private String version;
 	public static boolean rbAllow;
 	public static boolean rbOp;
+	public static String notAllowedMsg;
 	public static List<Integer> rbBlocks;
 	public static List<Integer> allowID;
 
@@ -27,14 +28,14 @@ public class HatMe extends JavaPlugin{
 	public void onDisable() {
 		reloadConfig();
 		saveConfig();
-		log.info(name + "has been disabled");
+		log.info(name + " has been disabled");
 	}
 	@SuppressWarnings("unchecked")
 	@Override
 	public void onEnable(){
 
-		version = this.getDescription().getName();
-		name = this.getDescription().getVersion();
+		version = this.getDescription().getVersion();
+		name = this.getDescription().getName();
 
 		log.info(name + " version " + version + " has started...");
 		PluginManager pm = getServer().getPluginManager();
@@ -43,10 +44,14 @@ public class HatMe extends JavaPlugin{
 		log.info("[" + name + "]: " + "Loading config... ");
 		rbBlocks = getConfig().getList("hatMe.allowed");
 		rbAllow = getConfig().getBoolean("hatMe.enable");
+		notAllowedMsg = getConfig().getString("hatMe.notAllowedMsg");
 		rbOp = getConfig().getBoolean("hatMe.opnorestrict");
 		log.info("[" + name + "]: " + "has loaded config! ");
 		if(rbAllow != false){
 			log.info("[" + name + "]: " + "is restricting blocks");
+			if(notAllowedMsg != "Invalid Item"){
+				log.info("[" + name + "]: " + "is using custom restricted block message");
+			}
 		}
 		log.info(name + " version " + version + " has been enabled!");
 		}
@@ -63,12 +68,12 @@ public class HatMe extends JavaPlugin{
 					allowID = rbBlocks;
 					if(rbAllow != false){
 						//if restrict is true
-						if(!allowID.contains(itemHandId) || itemHandId != 0){
+						if((!allowID.contains(itemHandId)) && (itemHandId != 0)){
 							//checks for allowed blocks
-							player.sendMessage(ChatColor.RED + "Invalid item");
+							player.sendMessage(ChatColor.RED + notAllowedMsg);
 							return true;
 						}else{hatOn(sender); return true;}
-					}else{hatOn(sender); player.sendMessage(Boolean.toString(rbAllow));  return true;}
+					}else{hatOn(sender); return true;}
 					//if restrict is false
 				}else{
 					player.sendMessage(ChatColor.RED + "You do not have permission");
