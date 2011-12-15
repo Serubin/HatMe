@@ -19,14 +19,17 @@ public class HatMe extends JavaPlugin{
 	private String name;
 	private String version;
 	public static boolean rbAllow;
+	public static boolean rbOp;
 	public static List<Integer> rbBlocks;
 	public static List<Integer> allowID;
 
 	@Override
 	public void onDisable() {
+		reloadConfig();
 		saveConfig();
 		log.info(name + "has been disabled");
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public void onEnable(){
 
@@ -37,35 +40,36 @@ public class HatMe extends JavaPlugin{
 		PluginManager pm = getServer().getPluginManager();
 		getConfig().options().copyDefaults(true);
 		saveConfig();
+		log.info("[" + name + "]: " + "Loading config... ");
+		rbBlocks = getConfig().getList("hatMe.allowed");
+		rbAllow = getConfig().getBoolean("hatMe.enable");
+		rbOp = getConfig().getBoolean("hatMe.opnorestrict");
+		log.info("[" + name + "]: " + "has loaded config! ");
+		if(rbAllow != false){
+			log.info("[" + name + "]: " + "is restricting blocks");
+		}
 		log.info(name + " version " + version + " has been enabled!");
-
 		}
 
 
 
 
-	  public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		  Player player = (Player) sender;
 		  ItemStack itemHand = player.getItemInHand();
 		  int itemHandId = itemHand.getTypeId();
-		  //rbBlocks = getConfig().getList("hatMe.allowed");
-		  
-		  
-		  
-
-;		 if (commandLabel.equalsIgnoreCase("hat") || commandLabel.equalsIgnoreCase("hatme") || commandLabel.equalsIgnoreCase("hm")){
+		 if (commandLabel.equalsIgnoreCase("hat") || commandLabel.equalsIgnoreCase("hatme") || commandLabel.equalsIgnoreCase("hm")){
 				if (checkPermissionBasic(player)) {
-					//List<Integer> allowID = rbBlocks;
-						//AllowID.addAll(rbAllow);
-					rbAllow = getConfig().getBoolean("hatMe.enabled");
-					if(rbAllow != true){
-						//for(Integer allowID: rbBlocks){
-						//if(itemHandId != allowID){
-							player.sendMessage(ChatColor.RED + "Invalid item" + Boolean.toString(rbAllow));
+					allowID = rbBlocks;
+					if(rbAllow != false){
+						//if restrict is true
+						if(!allowID.contains(itemHandId) || itemHandId != 0){
+							//checks for allowed blocks
+							player.sendMessage(ChatColor.RED + "Invalid item");
 							return true;
-						//}else{hatOn(sender); return true;}
-					//}
+						}else{hatOn(sender); return true;}
 					}else{hatOn(sender); player.sendMessage(Boolean.toString(rbAllow));  return true;}
+					//if restrict is false
 				}else{
 					player.sendMessage(ChatColor.RED + "You do not have permission");
 					return true;
@@ -88,6 +92,7 @@ public class HatMe extends JavaPlugin{
                     }else{
                     inventory.setHelmet(null);                     // removes item from helmet
                     inventory.setItem(empty, itemHead);              //Sets item from helmet to first open slot
+                    player.sendMessage(ChatColor.YELLOW + "You have taken off your hat!");
                     return true;
                     }
 				  	}  

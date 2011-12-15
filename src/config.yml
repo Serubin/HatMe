@@ -1,6 +1,7 @@
 hatMe:
     enable: true
     allowed: 
+    - 0
     - 1
     - 2
     - 3
