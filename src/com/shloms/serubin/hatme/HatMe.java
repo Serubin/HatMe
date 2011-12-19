@@ -69,13 +69,10 @@ public class HatMe extends JavaPlugin {
 		 if (commandLabel.equalsIgnoreCase("hat")){
 			 if (checkPermissionBasic(player)) {
 				 if(args.length == 0){
-					 player.sendMessage(ChatColor.RED + "DEBUG: Got past args.lenth==0");
 					allowID = rbBlocks;
 					if(rbAllow != false){
 						//if restrict is true
-						player.sendMessage(ChatColor.RED + "DEBUG: Got past RBALLOW");
 						if((!allowID.contains(itemHandId)) && (itemHandId != 0)){
-							player.sendMessage(ChatColor.RED + "DEBUG: Got past ALLOWID");
 							//checks for allowed blocks
 							player.sendMessage(ChatColor.RED + notAllowedMsg);
 							return true;
@@ -197,6 +194,7 @@ public class HatMe extends JavaPlugin {
 				player.sendMessage(ChatColor.YELLOW + "You now have been given a hat!");
 				 }
 			} else {
+				inventory.setHelmet(item);
 				player.sendMessage(ChatColor.YELLOW + "You now have been given a hat!");
 				return true;
 			}
