@@ -66,7 +66,7 @@ public class HatMe extends JavaPlugin {
 		  ItemStack itemHand = player.getItemInHand();
 		  PlayerInventory inventory = player.getInventory();
 		  int itemHandId = itemHand.getTypeId();
-		 if (commandLabel.equalsIgnoreCase("hat") || commandLabel.equalsIgnoreCase("hatme") || commandLabel.equalsIgnoreCase("hm")){
+		 if (commandLabel.equalsIgnoreCase("hat")){
 			 if (checkPermissionBasic(player)) {
 				 if(args.length == 0){
 					 player.sendMessage(ChatColor.RED + "DEBUG: Got past args.lenth==0");
@@ -112,7 +112,7 @@ public class HatMe extends JavaPlugin {
 		 }
 
 
-		  if (commandLabel.equalsIgnoreCase("unhat") || commandLabel.equalsIgnoreCase("unhatme") || commandLabel.equalsIgnoreCase("unhm")){
+		  if (commandLabel.equalsIgnoreCase("unhat")){
 			  if(checkPermissionBasic(player)){
 				  if (player.getInventory().getHelmet().getTypeId() == 0) {                          //If helmet is empty do nothing
 	                  player.sendMessage(ChatColor.RED + "You have no hat to take off!");
