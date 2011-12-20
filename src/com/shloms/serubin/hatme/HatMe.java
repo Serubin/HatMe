@@ -72,17 +72,30 @@ public class HatMe extends JavaPlugin {
 					allowID = rbBlocks;
 					if(rbAllow != false){
 						//if restrict is true
+						if(!checkPermissionNoRestrict(player)){
+							//if op or has perm no restrict
 						if((!allowID.contains(itemHandId)) && (itemHandId != 0)){
 							//checks for allowed blocks
 							player.sendMessage(ChatColor.RED + notAllowedMsg);
 							return true;
 						}else{hatOn(sender); return true;}
 					}else{hatOn(sender); return true;}
+					}else{hatOn(sender); return true;}
 					//if restrict is false
 				 }if (args.length == 1) {
-					 if (checkPermissionGive(player)) {
-							giveHat(sender, cmd, commandLabel, args);
-							return true;
+					 if (checkPermissionGive(player, args)) {
+						 allowID = rbBlocks;
+							if(rbAllow != false){
+								//if restrict is true
+								if(!checkPermissionNoRestrict(player)){
+									//if op or has perm no restrict
+								if((!allowID.contains(Integer.parseInt(args[0]))) && (Integer.parseInt(args[0]) != 0)){
+									//checks for allowed blocks
+									player.sendMessage(ChatColor.RED + notAllowedMsg);
+									return true;
+								}else{giveHat(sender, cmd, commandLabel, args); return true;}
+							}else{giveHat(sender, cmd, commandLabel, args); return true;}
+							}else{giveHat(sender, cmd, commandLabel, args); return true;}
 					 }else{
 							player.sendMessage(ChatColor.RED + "You do not have permission");
 							return true;
@@ -110,7 +123,6 @@ public class HatMe extends JavaPlugin {
 
 
 		  if (commandLabel.equalsIgnoreCase("unhat")){
-			  if(checkPermissionBasic(player)){
 				  if (player.getInventory().getHelmet().getTypeId() == 0) {                          //If helmet is empty do nothing
 	                  player.sendMessage(ChatColor.RED + "You have no hat to take off!");
 	                  return true;
@@ -128,23 +140,26 @@ public class HatMe extends JavaPlugin {
                     return true;
                     }
 				  	}  
-		  	}else{
-				player.sendMessage(ChatColor.RED + "You do not have permission");
-				return true;
-			}
 		  }
 		return true;
 	  }
-
+	
 	private boolean checkPermissionBasic(Player player) {
-		if (player.hasPermission("hatme.hat") || player.hasPermission("hatme.*") || player.isOp()) return true;
+		if (player.hasPermission("hatme.hat") || player.hasPermission("hatme.*") || player.hasPermission("hatme.hat." + player.getItemInHand().getTypeId())) return true;
+		if(rbOp = true && player.isOp()) return true;
 		return false;
 	}
 
-	 private boolean checkPermissionGive(Player player) {
-	 if(player.hasPermission("hatme.give") || player.hasPermission("hatme.*") || player.isOp()) return true;
+	 private boolean checkPermissionGive(Player player, String[] args) {
+	 if(player.hasPermission("hatme.give") || player.hasPermission("hatme.*") || player.hasPermission("hatme.give." + Integer.parseInt(args[0])) ) return true;
+	 if(rbOp = true && player.isOp()) return true;
 	 return false;
 	 }
+	 private boolean checkPermissionNoRestrict(Player player) {
+			if (player.hasPermission("hatme.norestrict") || player.hasPermission("hatme.*")) return true;
+			if(rbOp = true && player.isOp()) return true;
+			return false;
+		}
 
 	public boolean hatOn(CommandSender sender) {
 		Player player = (Player) sender;
