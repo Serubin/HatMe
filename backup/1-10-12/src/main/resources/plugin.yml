@@ -14,20 +14,16 @@ commands:
    hadmin:
       aliases: [ha, hata]
       description: Add, remove, and list allowed blocks
-      usage: /<command> <arg> - list allowed blocks
+      usage: /<command> - list allowed blocks
 permissions:
   hatme.*:
     description: gives full permission on Hatme.
     children:
       hatme.hat: true
+      hatme.give: true
       hatme.norestrict: true
       hatme.admin: true
-      hatme.hat.all: true
   hatme.hat.give:
     description: gives full permission on /hat.
     children:
-      hatme.hat: true
-  hatme.hat.all:
-    description: gives permission to /hat and /hat -a
-    children:
-      hatme.hat: true 
+     hatme.hat: true

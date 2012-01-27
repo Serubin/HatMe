@@ -29,7 +29,7 @@ public class AdminCommand implements CommandExecutor {
 				if (args[0].equalsIgnoreCase("list")) {
 					if (checkPermissionAdmin(player)) {
 						if (args.length > 1) {
-							player.sendMessage("/hadmin list - lists allowed block list");
+							player.sendMessage("/hadmin list> - lists allowed block list");
 							return true;
 						} else {
 							String blocks = plugin.rbBlocks.toString();

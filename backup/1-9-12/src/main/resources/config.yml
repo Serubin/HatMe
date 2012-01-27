@@ -1,6 +1,7 @@
 hatMe:
     enable: true
     allowed: 
+    - 0
     - 1
     - 2
     - 3
@@ -41,4 +42,4 @@ hatMe:
     - 103
     - 112
     opnorestrict: true
-    notAllowedMsg: "You do not have permission"
+    notAllowedMsg: Invalid Item

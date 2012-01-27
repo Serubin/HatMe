@@ -64,7 +64,7 @@ public class HatMe extends JavaPlugin {
 		getCommand("unhat").setExecutor(Hat);
 		getCommand("hadmin").setExecutor(Admin);
 
-		log.info("[" + name + "]: " + "Loaded commands");
+		log.info("[" + name + "]: " + "Loaded ommands");
 		log.info(name + " version " + version + " has been enabled!");
 	}
 
