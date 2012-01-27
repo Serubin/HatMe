@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.serubin</groupId>
   <artifactId>hatMe</artifactId>
-  <version>0.9.0</version>
+  <version>0.9.5</version>
   <packaging>jar</packaging>
   <name>hatMe</name>
   <url></url>

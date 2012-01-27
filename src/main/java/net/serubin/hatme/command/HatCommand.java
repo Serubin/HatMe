@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.ChatColor;
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,6 +12,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.material.MaterialData;
 
 import net.serubin.hatme.HatMe;
 import net.serubin.hatme.permissions.Permission;
@@ -234,12 +236,15 @@ public class HatCommand implements CommandExecutor {
 						// create new stack for head
 						Material itemId = Material.getMaterial(itemHand
 								.getTypeId());
-
 						ItemStack newHead = new ItemStack(itemId, 1);
+						if (itemHand.getTypeId() == 35 || itemHand.getTypeId() == 17 || itemHand.getTypeId() == 18 || itemHand.getTypeId() == 44) {
+						    short itemHandData = itemHand.getDurability();
+							newHead = new ItemStack(itemId, 1, itemHandData);
+						}
 						inventory.setHelmet(newHead);
 					} else {
 						inventory.setHelmet(itemHand);
-						inventory.remove(itemHand);
+						inventory.setItemInHand(null);
 						player.sendMessage(ChatColor.YELLOW
 								+ "You now have a hat!");
 						return true;
@@ -261,15 +266,18 @@ public class HatCommand implements CommandExecutor {
 					// set new stack to hand
 					itemHand.setAmount(newItemHandAmount);
 					// get hand id
-					Material itemId = Material
-							.getMaterial(itemHand.getTypeId());
-					// set head new stack
+					Material itemId = Material.getMaterial(itemHand
+							.getTypeId());
 					ItemStack newHead = new ItemStack(itemId, 1);
+					if (itemHand.getTypeId() == 35 || itemHand.getTypeId() == 17 || itemHand.getTypeId() == 18 || itemHand.getTypeId() == 44) {
+					    short itemHandData = itemHand.getDurability();
+						newHead = new ItemStack(itemId, 1, itemHandData);
+					}
 					inventory.setHelmet(newHead);
 				} else {
 					// if hand is one block set helmet remove hand
 					inventory.setHelmet(itemHand);
-					inventory.remove(itemHand);
+					inventory.setItemInHand(null);
 					player.sendMessage(ChatColor.YELLOW + "You now have a hat!");
 					return true;
 				}
