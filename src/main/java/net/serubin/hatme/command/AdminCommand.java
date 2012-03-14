@@ -12,48 +12,49 @@ import org.bukkit.entity.Player;
 
 public class AdminCommand implements CommandExecutor {
 
-	HatMe plugin;
+    HatMe plugin;
 
-	public AdminCommand(List<Integer> rbBlocks2, boolean rbAllow2,
-			String notAllowedMsg, boolean rbOp2) {
-		// TODO Auto-generated constructor stub
-	}
+    public AdminCommand(List<?> rbBlocks, boolean rbAllow2,
+            String notAllowedMsg, boolean rbOp2) {
+        // TODO Auto-generated constructor stub
+    }
 
-	public boolean onCommand(CommandSender sender, Command cmd,
-			String commandLabel, String[] args) {
-		if (commandLabel.equalsIgnoreCase("hadmin")) {
-			Player player = (Player) sender;
-			if (args.length == 0) {
-				return false;
-			} else {
-				if (args[0].equalsIgnoreCase("list")) {
-					if (checkPermissionAdmin(player)) {
-						if (args.length > 1) {
-							player.sendMessage("/hadmin list - lists allowed block list");
-							return true;
-						} else {
-							String blocks = plugin.rbBlocks.toString();
-							player.sendMessage("Allowed Blocks: " + blocks);
-							return true;
-						}
-					} else {
-						player.sendMessage(ChatColor.RED
-								+ "You do not have permission");
-						return true;
-					}
+    public boolean onCommand(CommandSender sender, Command cmd,
+            String commandLabel, String[] args) {
+        if (commandLabel.equalsIgnoreCase("hadmin")) {
+            if (args.length == 0) {
+                return false;
+            } else {
+                if (args[0].equalsIgnoreCase("list")) {
+                    if (checkPermissionAdmin(sender)) {
+                        if (args.length > 1) {
+                            sender.sendMessage("/hadmin list - lists allowed block list");
+                            return true;
+                        } else {
+                            String blocks = plugin.rbBlocks.toString();
+                            sender.sendMessage("Allowed Blocks: " + blocks);
+                            return true;
+                        }
+                    } else {
+                        sender.sendMessage(ChatColor.RED
+                                + "You do not have permission");
+                        return true;
+                    }
 
-				} else {
-				}
-			}
-		}
-		return false;
-	}
+                } else {
+                }
+            }
+        }
+        return false;
+    }
 
-	public boolean checkPermissionAdmin(Player player) {
-		if (player.hasPermission("hatme.admin"))
-			return true;
-		if (plugin.rbOp = true && player.isOp())
-			return true;
-		return false;
-	}
+    public boolean checkPermissionAdmin(CommandSender sender) {
+        if (sender.hasPermission("hatme.admin"))
+            return true;
+        if (plugin.rbOp = true && sender.isOp())
+            return true;
+        if (!(sender instanceof Player))
+            return true;
+        return false;
+    }
 }

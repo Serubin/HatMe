@@ -1,6 +1,6 @@
 name: hatMe
 main: net.serubin.hatme.HatMe
-version: 0.9.5
+version: 1.0.0
 
 commands:
    hat:
@@ -27,7 +27,3 @@ permissions:
     description: gives full permission on /hat.
     children:
       hatme.hat: true
-  hatme.hat.all:
-    description: gives permission to /hat and /hat -a
-    children:
-      hatme.hat: true 

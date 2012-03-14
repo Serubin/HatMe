@@ -44,7 +44,7 @@ public class HatMe extends JavaPlugin {
 		saveConfig();
 		// Loads config
 		log.info("[" + name + "]: " + "Loading config... ");
-		rbBlocks = getConfig().getList("hatMe.allowed");
+		rbBlocks = getConfig().getIntegerList("hatMe.allowed");
 		rbAllow = getConfig().getBoolean("hatMe.enable");
 		notAllowedMsg = getConfig().getString("hatMe.notAllowedMsg");
 		rbOp = getConfig().getBoolean("hatMe.opnorestrict");
