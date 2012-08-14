@@ -1,29 +1,32 @@
-name: hatMe
+name: HatMe
 main: net.serubin.hatme.HatMe
-version: 1.0.0
+version: 2.0.0
 
 commands:
-   hat:
-      aliases: [hat, hatme, hm]
-      description: Command that puts the item on your head.
-      usage: /<command> - puts item on head
-   unhat:
-      aliases: [unhat, unhatme, unhm]
-      description: Command to take your "hat" off.
-      usage: /<command> - takes item off head
-   hadmin:
-      aliases: [ha, hata]
-      description: Add, remove, and list allowed blocks
-      usage: /<command> <arg> - list allowed blocks
+  hat:
+    aliases: [hat, hatme, hm]
+    description: Command that puts the item on your head.
+    usage: /<command> - puts item on head
+  unhat:
+    aliases: [unhat, unhatme, unhm]
+    description: Command to take your "hat" off.
+    usage: /<command> - takes item off head
 permissions:
   hatme.*:
     description: gives full permission on Hatme.
     children:
       hatme.hat: true
       hatme.norestrict: true
-      hatme.admin: true
+      hatme.hat.give: true
       hatme.hat.all: true
+  hatme.hat:
+    description: gives permission on /hat.
+    default: op
+  hatme.norestrict:
+    description: gives permission on /hat with no restrictions.
+    default: op
   hatme.hat.give:
     description: gives full permission on /hat.
+    default: op
     children:
       hatme.hat: true
