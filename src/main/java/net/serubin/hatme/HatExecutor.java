@@ -31,9 +31,7 @@ public class HatExecutor {
         } else {
 
             if (!headEmpty(player)) {
-                plugin.sendMessage(player, ChatColor.RED,
-                        plugin.hatAlreadyOnMessage());
-                // TODO swap helmet with hand
+                swapHeadHand(player);
                 return true;
             }
 
@@ -51,14 +49,16 @@ public class HatExecutor {
         ItemStack itemHand = player.getItemInHand();
 
         if (itemHand == null) {
+            if(!headEmpty(player)){
+                hatOff(player);
+                return true;
+            }
             plugin.sendMessage(player, ChatColor.RED, plugin.airHeadMessage());
-            // TODO take off hat
             return true;
         } else {
 
             if (!headEmpty(player)) {
-                plugin.sendMessage(player, ChatColor.RED,
-                        plugin.hatAlreadyOnMessage());
+               swapHeadHandAll(player);
                 return true;
             }
 
@@ -129,6 +129,16 @@ public class HatExecutor {
         }
     }
 
+    private boolean swapHeadHand(Player player) {
+        hatOff(player);
+        moveOneToHead(player.getItemInHand(), player);
+        return true;
+    }
+    private boolean swapHeadHandAll(Player player) {
+        hatOff(player);
+        moveAllToHead(player.getItemInHand(), player);
+        return true;
+    }
     private boolean moveAllToHead(ItemStack itemHand, Player player) {
         PlayerInventory playerInv = player.getInventory();
         playerInv.setHelmet(itemHand);
