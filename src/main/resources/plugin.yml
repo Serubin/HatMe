@@ -1,6 +1,6 @@
 name: HatMe
 main: net.serubin.hatme.HatMe
-version: 2.0.1
+version: ${project.version}
 
 commands:
   hat:
@@ -21,7 +21,7 @@ permissions:
       hatme.hat.all: true
   hatme.hat:
     description: gives permission on /hat.
-    default: op
+    default: true
   hatme.norestrict:
     description: gives permission on /hat with no restrictions.
     default: op

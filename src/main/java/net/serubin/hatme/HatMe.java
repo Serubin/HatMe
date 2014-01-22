@@ -4,14 +4,12 @@ import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 public class HatMe extends JavaPlugin {
 
-    private static HatMe plugin;
     static Logger log = Logger.getLogger("Minecraft");
     private String name;
     private String version;
@@ -35,17 +33,19 @@ public class HatMe extends JavaPlugin {
         version = this.getDescription().getVersion();
         name = this.getDescription().getName();
         info("Start Plugin... (Version: " + version + ")");
-        PluginManager pm = getServer().getPluginManager();
+        getServer().getPluginManager();
 
         getConfig().options().copyDefaults(true);
         saveConfig();
 
-        this.notAllowedMsg = getConfig()
-                .getString("plugin.hatme.notAllowedMsg");
+        this.notAllowedMsg = getConfig().getString("plugin.hatme.notAllowedMsg");
+
         this.permsHandler = new HatPermsHandler(this, getConfig());
         this.executor = new HatExecutor(this);
+
         getCommand("hat").setExecutor(this);
         getCommand("unhat").setExecutor(this);
+
         info("Plugin Loaded!");
     }
 
@@ -75,7 +75,8 @@ public class HatMe extends JavaPlugin {
     public String hatAlreadyOnMessage() {
         return hatAlreadyOn;
     }
-    public String airHeadMessage(){
+
+    public String airHeadMessage() {
         return airHead;
     }
 
@@ -92,12 +93,35 @@ public class HatMe extends JavaPlugin {
         player.sendMessage(color + "[" + name + "] " + text);
     }
 
+    @SuppressWarnings("deprecation")
     public boolean onCommand(CommandSender sender, Command cmd,
             String commandLabel, String[] args) {
+        Player player = (Player) sender;
+        boolean hatAll = false;
+        boolean otherPlayer = false;
+        int giveHat = 0;
+
+        if (args.length > 1) {
+            if (args[0].equalsIgnoreCase("-a")){
+                hatAll = true;
+               args = stripFirstArg(args);
+            }
+                try{
+                    player = getServer().getPlayer(args[0]);
+                    otherPlayer = true;
+                }catch(NullPointerException e){
+                    player = (Player) sender;
+                    otherPlayer = false;
+                }
+            if(otherPlayer){
+                
+            }
+        }
+
         if (commandLabel.equalsIgnoreCase("hat")) {
             // No arguments? Standard operation.
             if (args.length == 0 && (sender instanceof Player)) {
-                Player player = (Player) sender;
+
                 if (!permsHandler.checkHatPerms(player)) {
                     sender.sendMessage(ChatColor.RED
                             + "[HatMe] You do not have permission to use this command.");
@@ -115,8 +139,8 @@ public class HatMe extends JavaPlugin {
                     return false;
                 return true;
 
-            } else if (args.length == 1 && (sender instanceof Player)) {
-                Player player = (Player) sender;
+            } else if (args.length == 1) {
+
                 if (args[0].equalsIgnoreCase("-a")) {
 
                     if (!permsHandler.checkHatAllPerms(player)) {
@@ -125,7 +149,7 @@ public class HatMe extends JavaPlugin {
                         return true;
                     }
 
-                    if (player.getItemInHand().getTypeId() == 0) {
+                    if (player.getItemInHand().getType().getId() == 0) {
                         player.sendMessage(ChatColor.YELLOW
                                 + "[HatMe] You just tried to put air on your head. Good job.");
                         return true;
@@ -153,12 +177,16 @@ public class HatMe extends JavaPlugin {
                                 + notAllowedMsg);
                         return true;
                     }
-
-                    if (!executor.giveHat(player, Integer.parseInt(args[0])))
+                    String[] item = args[0].split(":");
+                    if (item.length != 1)
+                        item[1] = "0";
+                    if (!executor.giveHat(player, Integer.parseInt(item[0]),
+                            Short.parseShort(item[1])))
                         return false;
                     return true;
                 }
             } else {
+
                 sender.sendMessage(ChatColor.RED
                         + "[HatMe] You have used this command incorrectly, or you are the console.");
                 return true;
@@ -172,7 +200,6 @@ public class HatMe extends JavaPlugin {
                         + "[HatMe] This command does not take any arguments. If you are the console, you can't use this.");
                 return true;
             } else {
-                Player player = (Player) sender;
                 // check is hat is 0
                 if (player.getInventory().getHelmet() == null) {
                     player.sendMessage(ChatColor.YELLOW
@@ -187,7 +214,16 @@ public class HatMe extends JavaPlugin {
         return false;
     }
 
-    public boolean checkArgInt(String arg) {
+    private String[] stripFirstArg(String[] args) {
+        String[] argNew = new String[args.length - 1];
+        for (int i = 1; i < args.length; i++) {
+            argNew[i - 1] = args[i];
+        }
+        return argNew;
+
+    }
+
+    private boolean checkArgInt(String arg) {
         try {
             Integer.parseInt(arg);
         } catch (NumberFormatException ex) {

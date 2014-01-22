@@ -13,10 +13,11 @@ public class HatExecutor {
         this.plugin = plugin;
     }
 
+    @SuppressWarnings("deprecation")
     public boolean hatOn(Player player) {
         ItemStack itemHand = player.getItemInHand();
 
-        if (itemHand == null || itemHand.getTypeId() == 0) {
+        if (itemHand == null || itemHand.getType().getId() == 0) {
             if (player.getInventory().getHelmet() == null) {
                 plugin.sendMessage(player, ChatColor.RED,
                         plugin.airHeadMessage());
@@ -72,7 +73,7 @@ public class HatExecutor {
         }
     }
 
-    public boolean giveHat(Player player, int itemID) {
+    public boolean giveHat(Player player, int itemID, short itemData) {
         if (itemID == 0) {
             plugin.sendMessage(player, ChatColor.RED, plugin.airHeadMessage());
             return true;
@@ -84,7 +85,7 @@ public class HatExecutor {
                 return true;
             }
 
-            if (setHead(itemID, player)) {
+            if (setHead(itemID, itemData, player)) {
                 plugin.sendMessage(player, ChatColor.YELLOW,
                         plugin.hatOnMessage());
                 return true;
@@ -146,9 +147,10 @@ public class HatExecutor {
         return true;
     }
 
-    private boolean setHead(int itemID, Player player) {
+    @SuppressWarnings("deprecation")
+    private boolean setHead(int itemID, short itemData, Player player) {
         PlayerInventory playerInv = player.getInventory();
-        playerInv.setHelmet(new ItemStack(itemID));
+        playerInv.setHelmet(new ItemStack(itemID, 1, itemData));
         return true;
     }
 
